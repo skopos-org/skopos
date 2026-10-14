@@ -1010,7 +1010,7 @@ test.each([409, 503])(
 
 test("report history reads one metadata page and loads only the selected body", async () => {
   await i18n.changeLanguage("en");
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   const requests: string[] = [];
   wire.mockImplementation(async (request: Request) => {
     expect(request.method).toBe("GET");

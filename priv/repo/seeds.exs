@@ -1,1 +1,1 @@
-Opsonde.Release.seed()
+Skopos.Release.seed()

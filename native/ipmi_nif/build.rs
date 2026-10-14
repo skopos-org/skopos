@@ -43,7 +43,7 @@ fn main() {
         .unwrap();
     assert!(revision.status.success());
     assert_eq!(String::from_utf8(revision.stdout).unwrap().trim(), REVISION);
-    if !sdk.join(".opsonde-build-complete").exists() {
+    if !sdk.join(".skopos-build-complete").exists() {
         run(&sdk, "sh", &["bootstrap"]);
         assert!(Command::new("./configure")
             .current_dir(&sdk)
@@ -65,7 +65,7 @@ fn main() {
             .success());
         // LAN supplies shared firmware MD5 symbols; only lanplus is invoked.
         run(&sdk, "make", &["-j8"]);
-        fs::write(sdk.join(".opsonde-build-complete"), REVISION).unwrap();
+        fs::write(sdk.join(".skopos-build-complete"), REVISION).unwrap();
     }
     run(&sdk, "git", &["diff", "--exit-code", "--quiet"]);
     let object = out.join("transport.o");

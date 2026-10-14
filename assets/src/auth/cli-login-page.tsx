@@ -60,7 +60,7 @@ export function CLILoginPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="rounded-md border bg-muted/30 p-3 text-sm">
-            <div className="font-medium">Opsonde CLI</div>
+            <div className="font-medium">Skopos CLI</div>
             <div className="mt-1 text-muted-foreground">{t("cliLogin.loopback")}</div>
             {account && <div className="mt-2">{account.email}</div>}
           </div>

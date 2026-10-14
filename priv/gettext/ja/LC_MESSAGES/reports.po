@@ -1,4 +1,4 @@
-## Japanese translations for Opsonde reports.
+## Japanese translations for Skopos reports.
 msgid ""
 msgstr ""
 "Language: ja\n"

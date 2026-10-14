@@ -89,20 +89,20 @@ jobs:
           sudo apt-get install -y p7zip-full
           mix deps.get --only cli
           for target in linux_x86_64 linux_aarch64 macos_x86_64 macos_aarch64 windows_x86_64; do
-            BURRITO_TARGET=${target} mix release opsonde --overwrite
-            test ! -e "_build/cli/rel/opsonde/lib/opsonde-${VERSION}/priv"
-            test ! -e "_build/cli/rel/opsonde/lib/opsonde-${VERSION}/include"
+            BURRITO_TARGET=${target} mix release skopos --overwrite
+            test ! -e "_build/cli/rel/skopos/lib/skopos-${VERSION}/priv"
+            test ! -e "_build/cli/rel/skopos/lib/skopos-${VERSION}/include"
           done
-          for path in burrito_out/opsonde_*; do
-            target=${path#burrito_out/opsonde_}
-            mv "${path}" "burrito_out/opsonde-${VERSION}-${target}"
+          for path in burrito_out/skopos_*; do
+            target=${path#burrito_out/skopos_}
+            mv "${path}" "burrito_out/skopos-${VERSION}-${target}"
           done
           cd burrito_out
-          sha256sum opsonde-* > SHA256SUMS
+          sha256sum skopos-* > SHA256SUMS
 
       - uses: actions/upload-artifact@v4
         with:
-          name: opsonde-${{ needs.version.outputs.value }}-cli
+          name: skopos-${{ needs.version.outputs.value }}-cli
           path: burrito_out/
           if-no-files-found: error
 
@@ -126,7 +126,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: opsonde-${{ needs.version.outputs.value }}-cli
+          name: skopos-${{ needs.version.outputs.value }}-cli
           path: burrito_out
 
       - name: Run CLI on Unix
@@ -136,7 +136,7 @@ jobs:
           VERSION: ${{ needs.version.outputs.value }}
           TARGET: ${{ matrix.target }}
         run: |
-          binary="burrito_out/opsonde-${VERSION}-${TARGET}"
+          binary="burrito_out/skopos-${VERSION}-${TARGET}"
           chmod +x "${binary}"
           "${binary}" --help | tee help.txt
           grep -q '^Usage:' help.txt
@@ -148,7 +148,7 @@ jobs:
           VERSION: ${{ needs.version.outputs.value }}
           TARGET: ${{ matrix.target }}
         run: |
-          & ".\burrito_out\opsonde-$env:VERSION-$env:TARGET" --help | Tee-Object help.txt
+          & ".\burrito_out\skopos-$env:VERSION-$env:TARGET" --help | Tee-Object help.txt
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           if (-not (Select-String -Path help.txt -Pattern '^Usage:')) { exit 1 }
 
@@ -184,7 +184,7 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           outputs: type=image,name=${{ needs.version.outputs.image }},push-by-digest=true,name-canonical=true,push=true
-          build-args: OPSONDE_VERSION=${{ needs.version.outputs.value }}
+          build-args: SKOPOS_VERSION=${{ needs.version.outputs.value }}
 
       - name: Export image digest
         env:
@@ -210,7 +210,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: opsonde-${{ needs.version.outputs.value }}-cli
+          name: skopos-${{ needs.version.outputs.value }}-cli
           path: burrito_out
       - uses: actions/download-artifact@v4
         with:
@@ -227,7 +227,7 @@ jobs:
             gh release upload "${GITHUB_REF_NAME}" burrito_out/* --clobber
           else
             gh release create "${GITHUB_REF_NAME}" burrito_out/* \
-              --title "Opsonde ${VERSION}" --generate-notes
+              --title "Skopos ${VERSION}" --generate-notes
           fi
 
       - uses: docker/setup-buildx-action@v3

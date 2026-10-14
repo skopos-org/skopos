@@ -11,7 +11,7 @@ createRoot(document.getElementById("root")!).render(
       attribute="class"
       defaultTheme="light"
       enableSystem={false}
-      storageKey="opsonde.theme"
+      storageKey="skopos.theme"
       disableTransitionOnChange
     >
       <App />

@@ -36,7 +36,7 @@ test("closed proposal details do not encode or mount their complete technical va
 
 test("loads exact evidence only when opened and releases it when closed", async () => {
   await i18n.changeLanguage("en");
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   const payload = "[REDACTED]".repeat(65_522);
   wire.mockImplementation(async (request: Request) => {
     expect(request.method).toBe("GET");
@@ -108,7 +108,7 @@ test.each([
   "reads a complete %s receipt and refreshes an open detail after its revision changes",
   async (kind, path) => {
     await i18n.changeLanguage("en");
-    sessionStorage.setItem("opsonde.session", "fixture-token");
+    sessionStorage.setItem("skopos.session", "fixture-token");
     const reference =
       kind === "proposal" || kind === "turn"
         ? "x".repeat(64_000)

@@ -19,7 +19,7 @@ afterEach(() => {
 });
 const receiptId = "20000000-0000-4000-8000-000000000071";
 const selectedId = "20000000-0000-4000-8000-000000000072";
-const key = "opsonde.audit-deactivation:audit-admin";
+const key = "skopos.audit-deactivation:audit-admin";
 const original = {
   id: receiptId,
   name: "Original audit",
@@ -56,7 +56,7 @@ async function choose() {
 
 test("lost Audit deactivation survives reload and confirms the original ID without another POST", async () => {
   await i18n.changeLanguage("en");
-  const key = "opsonde.audit-deactivation:audit-admin";
+  const key = "skopos.audit-deactivation:audit-admin";
   let canonical = {
     id: receiptId,
     name: "Original audit",
@@ -239,7 +239,7 @@ test.each([409, 422, 503])(
       resolvePost(Response.json({ error: { message: "Late response" } }, { status })),
     );
     await waitFor(() => expect(sessionStorage.getItem(key)).toBe(status === 503 ? saved : null));
-    expect(sessionStorage.getItem("opsonde.audit-deactivation:other-admin")).toBeNull();
+    expect(sessionStorage.getItem("skopos.audit-deactivation:other-admin")).toBeNull();
     expect(posts).toBe(1);
     expect(reads).toBe(1);
     expect(screen.queryByText("Deactivated: Original audit")).toBeNull();

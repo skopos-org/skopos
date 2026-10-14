@@ -403,14 +403,14 @@ test("the actual Audit form sends its chosen registration identity and selected 
     },
   });
   await screen.findByText("Registered: Daily host audit");
-  expect(sessionStorage.getItem("opsonde.audit-registration:audit-admin")).toBeNull();
+  expect(sessionStorage.getItem("skopos.audit-registration:audit-admin")).toBeNull();
 });
 
 test("a lost Audit registration survives reload and confirms the original schedule without another POST", async () => {
   await i18n.changeLanguage("en");
   const id = "20000000-0000-4000-8000-000000000057";
   const targetId = "20000000-0000-4000-8000-000000000058";
-  const key = "opsonde.audit-registration:audit-admin";
+  const key = "skopos.audit-registration:audit-admin";
   vi.spyOn(crypto, "randomUUID").mockReturnValue(id);
   let schedule: Record<string, unknown> | null = null;
   let canRead = false;
@@ -484,7 +484,7 @@ test("a lost Audit registration survives reload and confirms the original schedu
   expect(sessionStorage.getItem(key)).toBeNull();
 });
 
-const registrationKey = "opsonde.audit-registration:audit-admin";
+const registrationKey = "skopos.audit-registration:audit-admin";
 const receiptId = "20000000-0000-4000-8000-000000000059";
 const selectedId = "20000000-0000-4000-8000-000000000060";
 
@@ -710,7 +710,7 @@ test.each([422, 409, 503])(
     await waitFor(() =>
       expect(sessionStorage.getItem(registrationKey)).toBe(status === 503 ? original : null),
     );
-    expect(sessionStorage.getItem("opsonde.audit-registration:different-admin")).toBeNull();
+    expect(sessionStorage.getItem("skopos.audit-registration:different-admin")).toBeNull();
     expect(receiptReads).toBe(0);
     expect(posts).toBe(1);
     expect(screen.queryByText("Registered: Receipt audit")).toBeNull();

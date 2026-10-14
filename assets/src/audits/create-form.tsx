@@ -57,7 +57,7 @@ function Editor({ open, onCreated }: Props) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [confirmed, setConfirmed] = useState<string | null>(null);
-  const storageKey = `opsonde.audit-registration:${account?.id}`;
+  const storageKey = `skopos.audit-registration:${account?.id}`;
   const [saved, setSaved] = useState(() =>
     readStoredRequest(storageKey, (value): Intent => {
       if (

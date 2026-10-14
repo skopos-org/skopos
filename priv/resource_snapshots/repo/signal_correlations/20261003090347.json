@@ -258,7 +258,7 @@
     "global": null,
     "strategy": null
   },
-  "repo": "Elixir.Opsonde.Repo",
+  "repo": "Elixir.Skopos.Repo",
   "schema": null,
   "table": "signal_correlations"
 }

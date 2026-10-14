@@ -26,7 +26,7 @@ export function AuditDeactivation(props: Props) {
 function Deactivation({ schedule, onChanged, onClose }: Props) {
   const { t } = useTranslation();
   const { account } = useAuthentication();
-  const storageKey = `opsonde.audit-deactivation:${account?.id}`;
+  const storageKey = `skopos.audit-deactivation:${account?.id}`;
   const [saved, setSaved] = useState(() =>
     readStoredRequest(storageKey, (value): Intent => {
       if (

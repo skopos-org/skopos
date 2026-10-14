@@ -1,9 +1,9 @@
-defmodule Opsonde.ProviderAdapterFixture do
-  @behaviour Opsonde.Providers.Adapter
-  @behaviour Opsonde.Providers.Target
+defmodule Skopos.ProviderAdapterFixture do
+  @behaviour Skopos.Providers.Adapter
+  @behaviour Skopos.Providers.Target
 
-  alias Opsonde.Providers.Target
-  alias Opsonde.Targets.ResourceScope
+  alias Skopos.Providers.Target
+  alias Skopos.Targets.ResourceScope
 
   @observation_operations ~w(
     filesystem.read filesystem.verify generic.inspect linux.identity.inspect
@@ -20,10 +20,10 @@ defmodule Opsonde.ProviderAdapterFixture do
   @impl true
   def kind, do: :target
 
-  @impl Opsonde.Providers.Target
+  @impl Skopos.Providers.Target
   def access_method_profile, do: :unrestricted
 
-  @impl Opsonde.Providers.Target
+  @impl Skopos.Providers.Target
   def resource_scope(operation, capability, selectors)
       when operation in [
              "service.restart",
@@ -67,16 +67,16 @@ defmodule Opsonde.ProviderAdapterFixture do
 
   def check(_state, _input), do: {:error, :capability, "unsupported fixture endpoint"}
 
-  @impl Opsonde.Providers.Target
+  @impl Skopos.Providers.Target
   def bind_connection(state, connection), do: {:ok, Map.put(state, :connection, connection)}
 
-  @impl Opsonde.Providers.Target
+  @impl Skopos.Providers.Target
   def capabilities(state, invocation) do
     notify(invocation, {:capabilities, state})
     respond(invocation)
   end
 
-  @impl Opsonde.Providers.Target
+  @impl Skopos.Providers.Target
   def classify_request(_state, request) do
     cond do
       request.operation in @observation_operations -> {:ok, :observation}
@@ -85,19 +85,19 @@ defmodule Opsonde.ProviderAdapterFixture do
     end
   end
 
-  @impl Opsonde.Providers.Target
+  @impl Skopos.Providers.Target
   def observe(state, request, invocation) do
     notify(invocation, {:observe, state, request})
     respond(invocation)
   end
 
-  @impl Opsonde.Providers.Target
+  @impl Skopos.Providers.Target
   def effect(state, request, invocation) do
     notify(invocation, {:effect, state, request})
     respond(invocation)
   end
 
-  @impl Opsonde.Providers.Target
+  @impl Skopos.Providers.Target
   def verify(state, request, invocation) do
     notify(invocation, {:verify, state, request})
     respond(invocation)

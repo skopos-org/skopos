@@ -151,7 +151,7 @@ export function CaseReportDocument({ report }: { report: Report }) {
     <article className="report-sheet" lang={locale} aria-label={c.kind}>
       <header className="report-masthead">
         <div className="report-brand">
-          <span className="report-brand-mark" /> OPSONDE{" "}
+          <span className="report-brand-mark" /> SKOPOS{" "}
           <span className="report-kind">/ {c.kind}</span>
         </div>
         <div className="report-issued">

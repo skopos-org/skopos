@@ -1,4 +1,4 @@
-defmodule Opsonde.AIHTTPFixture do
+defmodule Skopos.AIHTTPFixture do
   import Plug.Conn
 
   def init(agent), do: agent

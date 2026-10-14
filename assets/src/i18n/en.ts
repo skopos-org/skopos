@@ -54,14 +54,14 @@ const en = {
       diagnostics: "Diagnostics",
     },
     login: {
-      title: "Sign in to Opsonde",
-      description: "Use your Opsonde account to continue.",
+      title: "Sign in to Skopos",
+      description: "Use your Skopos account to continue.",
       email: "Email",
       password: "Password",
       submit: "Sign in",
       failed: "Email or password is invalid.",
       bootstrapTitle: "Create the initial administrator",
-      bootstrapDescription: "Use this once when starting a new Opsonde installation.",
+      bootstrapDescription: "Use this once when starting a new Skopos installation.",
       confirmPassword: "Confirm password",
       bootstrapSubmit: "Create administrator",
       firstUse: "First use? Create administrator",
@@ -73,7 +73,7 @@ const en = {
     },
     cliLogin: {
       title: "Allow CLI access",
-      description: "Confirm that the Opsonde CLI may use your account on this installation.",
+      description: "Confirm that the Skopos CLI may use your account on this installation.",
       loopback: "The result returns only to a loopback listener on this computer.",
       approve: "Allow",
       deny: "Deny",
@@ -127,7 +127,7 @@ const en = {
       backToAITypes: "Back to AI providers",
       chooseAIType: "Choose an AI provider",
       chooseAITypeDescription:
-        "Select the service Opsonde will use, then configure that connection.",
+        "Select the service Skopos will use, then configure that connection.",
       searchAIServices: "Search AI services",
       searchAIServicesPlaceholder: "Search by service name",
       noAIServicesFound: "No matching AI services.",
@@ -231,7 +231,7 @@ const en = {
       },
       oidcTitle: "OIDC authentication",
       oidcDescription:
-        "Optionally connect one identity provider and link it explicitly to existing Opsonde accounts.",
+        "Optionally connect one identity provider and link it explicitly to existing Skopos accounts.",
       oidcConnection: "Identity provider",
       oidcUnconfiguredStatus: "Not configured",
       oidcNotConfigured: "No identity provider configured.",
@@ -293,9 +293,9 @@ const en = {
       },
     },
     onboarding: {
-      title: "Connect Opsonde to your environment",
+      title: "Connect Skopos to your environment",
       description:
-        "Complete the required connections and authority before Opsonde can resolve incoming alerts. You can leave and resume from the same persisted configuration.",
+        "Complete the required connections and authority before Skopos can resolve incoming alerts. You can leave and resume from the same persisted configuration.",
       progress: "{{completed}} of {{total}} required steps ready",
       ready: "Ready",
       pending: "Pending",
@@ -305,7 +305,7 @@ const en = {
       configureOIDC: "Configure OIDC",
       continueLater: "Continue to Cases for now",
       resume:
-        "Opsonde will return administrators here on their next normal sign-in until all required steps are ready.",
+        "Skopos will return administrators here on their next normal sign-in until all required steps are ready.",
       steps: {
         ai: {
           title: "AI connection",
@@ -466,12 +466,12 @@ const en = {
       backToSignals: "Back to Signals",
       backToSignalTypes: "Back to monitoring systems",
       chooseSignalType: "Choose a monitoring system",
-      chooseSignalTypeDescription: "Select the system that will send alerts to Opsonde.",
+      chooseSignalTypeDescription: "Select the system that will send alerts to Skopos.",
       choiceAlertmanager:
         "Receive Prometheus Alertmanager notifications through a dedicated webhook.",
       choiceZabbix:
         "Receive Zabbix events through a dedicated webhook with source timezone handling.",
-      choiceGenericWebhook: "Receive monitoring events in Opsonde's documented Signal format.",
+      choiceGenericWebhook: "Receive monitoring events in Skopos's documented Signal format.",
       genericPayloadExample: "Example Signal payload",
       genericPayloadGuidance:
         "Send JSON with the connection's Bearer secret. Reuse event_key for recovery; replace state with recovered and set a later occurred_at. Full field rules are in the OpenAPI schema.",
@@ -518,8 +518,8 @@ const en = {
       actionInterventionRequired: "Review the stop reason, then resume or cancel the Case.",
       actionNone: "No action required",
       actionReviewCancellation: "Review cancellation",
-      actionVerifying: "Opsonde is verifying recovery",
-      actionResolving: "Opsonde is investigating and resolving",
+      actionVerifying: "Skopos is verifying recovery",
+      actionResolving: "Skopos is investigating and resolving",
       noMatchingCases: "No Cases on this page match the filters.",
       previousPage: "Previous",
       nextPage: "Next",
@@ -530,7 +530,7 @@ const en = {
       updated: "Updated",
       unresolved: "Target unresolved",
       targetPending:
-        "Opsonde is resolving the monitoring identity against the current Target inventory.",
+        "Skopos is resolving the monitoring identity against the current Target inventory.",
       openCase: "Open Case",
       noCases: "No Cases have been opened.",
       receipts: "Signal receipts",
@@ -726,11 +726,11 @@ const en = {
         sourceFiring: "The monitoring source reports an active incident.",
         sourceRecovered: "The monitoring source reports recovery.",
         caseOpened: "An investigation was opened.",
-        resolving: "Opsonde is investigating the Target and selecting the next recovery step.",
-        resolvingTarget: "Opsonde is matching the monitoring identity to a registered Target.",
+        resolving: "Skopos is investigating the Target and selecting the next recovery step.",
+        resolvingTarget: "Skopos is matching the monitoring identity to a registered Target.",
         waitingApproval:
-          "Opsonde has prepared an exact Target request and is waiting for a decision.",
-        verifying: "Opsonde is checking the Target and monitoring source before closing the Case.",
+          "Skopos has prepared an exact Target request and is waiting for a decision.",
+        verifying: "Skopos is checking the Target and monitoring source before closing the Case.",
         paused: "Automated resolution stopped at a finite boundary and needs operator input.",
         resolved: "Recovery was independently verified and this Case is complete.",
         cancelled: "Resolution was cancelled. The recorded investigation remains available.",
@@ -744,7 +744,7 @@ const en = {
           "The Target request did not pass its safety check. Review the diagnostics before deciding what to do next.",
         waitForVerification: "No operator action is required while recovery is verified.",
         claimOptional: "Claim the Case if you will coordinate the response.",
-        noAction: "Opsonde is continuing automatically; monitor its progress.",
+        noAction: "Skopos is continuing automatically; monitor its progress.",
       },
       progress: {
         proposal: "Target request proposed",
@@ -957,7 +957,7 @@ const en = {
       manageDestinations: "Manage destinations",
       readOnly: "Your account can inspect reports and deliveries. An operator must create them.",
       connections: "Notification connections",
-      connectionsDescription: "Register and verify the destinations Opsonde may deliver to.",
+      connectionsDescription: "Register and verify the destinations Skopos may deliver to.",
       addConnection: "Add webhook destination",
       secretDescription: "The signing secret is write-only and is never displayed again.",
       name: "Name",
@@ -1115,7 +1115,7 @@ const en = {
       readOnly: "Your account can view inventory. An administrator must change it.",
       requestFailed: "The request failed. Review the values and connection, then try again.",
       connectionsTitle: "Connections",
-      connectionsDescription: "Register and verify only the access paths Opsonde may use.",
+      connectionsDescription: "Register and verify only the access paths Skopos may use.",
       addConnection: "Add Target connection",
       addNetBox: "Add NetBox connection",
       backToConnections: "Back to connections",

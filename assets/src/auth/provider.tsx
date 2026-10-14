@@ -14,14 +14,14 @@ import i18n, { normalizeLocale, type SupportedLocale } from "@/i18n/config";
 type OIDCStatus = components["schemas"]["OIDCStatusResponse"]["data"];
 
 type OIDCMessage = {
-  type: "opsonde:oidc-session" | "opsonde:oidc-linked" | "opsonde:oidc-error";
+  type: "skopos:oidc-session" | "skopos:oidc-linked" | "skopos:oidc-error";
   token?: string;
   account?: Account;
 };
 
 function browserOIDC(path: string, successType: OIDCMessage["type"]) {
   return new Promise<{ token: string; account: Account }>((resolve, reject) => {
-    const popup = window.open("about:blank", "opsonde-oidc", "popup,width=640,height=720");
+    const popup = window.open("about:blank", "skopos-oidc", "popup,width=640,height=720");
     if (!popup) {
       reject(new Error("The browser blocked the OIDC sign-in window."));
       return;
@@ -46,7 +46,7 @@ function browserOIDC(path: string, successType: OIDCMessage["type"]) {
 
       if (message.type === successType && message.token && message.account) {
         finish({ token: message.token, account: message.account });
-      } else if (message.type === "opsonde:oidc-error") {
+      } else if (message.type === "skopos:oidc-error") {
         finish(new Error("OIDC authentication failed."));
       }
     };
@@ -130,14 +130,14 @@ export function AuthenticationProvider({ children }: { children: ReactNode }) {
       throw new Error("OIDC authentication is not enabled.");
     }
 
-    const result = await browserOIDC(oidcStatus.authorization_url, "opsonde:oidc-session");
+    const result = await browserOIDC(oidcStatus.authorization_url, "skopos:oidc-session");
     storeToken(result.token);
     setAccount(result.account);
   }, [oidcStatus]);
 
   const linkOIDC = useCallback(async () => {
     const { data } = apiData(await apiClient.POST("/api/v1/oidc/link-requests"));
-    const result = await browserOIDC(data.authorization_url, "opsonde:oidc-linked");
+    const result = await browserOIDC(data.authorization_url, "skopos:oidc-linked");
     storeToken(result.token);
     setAccount(result.account);
   }, []);

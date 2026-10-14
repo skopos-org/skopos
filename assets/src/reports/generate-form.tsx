@@ -30,7 +30,7 @@ function GenerateForm({ onGenerated, onClose }: Props) {
   const [selected, setSelected] = useState<Choice | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  const storageKey = `opsonde.report-generation:${account?.id}`;
+  const storageKey = `skopos.report-generation:${account?.id}`;
   const [saved, setSaved] = useState(() =>
     readStoredRequest(storageKey, (value): GenerationRequest => {
       if (

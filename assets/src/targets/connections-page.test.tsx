@@ -53,7 +53,7 @@ function page(data: unknown[], next: string | null = null) {
 
 test("Connections retain only the requested metadata page and can reach tail connections", async () => {
   await i18n.changeLanguage("en");
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   const requests: URL[] = [];
   wire.mockImplementation((request: Request) => {
     const url = new URL(request.url);

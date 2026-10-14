@@ -1,4 +1,4 @@
-defmodule Opsonde.Repo.Migrations.Baseline do
+defmodule Skopos.Repo.Migrations.Baseline do
   @moduledoc """
   Updates resources based on their most recent snapshots.
 

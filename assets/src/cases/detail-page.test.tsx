@@ -867,7 +867,7 @@ test("Phoenix changed events refresh labels and preserve an in-flight history se
     }
   }
   vi.stubGlobal("WebSocket", WireSocket);
-  sessionStorage.setItem("opsonde.session", "fixture");
+  sessionStorage.setItem("skopos.session", "fixture");
   let label = "Original live label";
   let failRead = false;
   let olderReads = 0;

@@ -174,7 +174,7 @@ function AppRoutes() {
                             : path.startsWith("/settings") || path === "/providers"
                               ? "pages.settings"
                               : "pages.notFound";
-    document.title = `${t(key)} · Opsonde`;
+    document.title = `${t(key)} · Skopos`;
   }, [location.pathname, t]);
 
   return (

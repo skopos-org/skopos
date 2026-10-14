@@ -1,19 +1,19 @@
 import Config
-config :opsonde, Oban, testing: :manual
-config :opsonde, token_signing_secret: "u1BW1Gxt1a++kTeasKEiwmx0VR8UEq+S"
+config :skopos, Oban, testing: :manual
+config :skopos, token_signing_secret: "u1BW1Gxt1a++kTeasKEiwmx0VR8UEq+S"
 
-config :opsonde,
+config :skopos,
   provider_adapters:
-    read_config(:opsonde)[:provider_adapters] ++
+    read_config(:skopos)[:provider_adapters] ++
       [
-        Opsonde.ProviderAdapterFixture,
-        Opsonde.SignalAdapterFixture,
-        Opsonde.InventoryAdapterFixture,
-        Opsonde.NotificationAdapterFixture,
-        Opsonde.AIAdapterFixture
+        Skopos.ProviderAdapterFixture,
+        Skopos.SignalAdapterFixture,
+        Skopos.InventoryAdapterFixture,
+        Skopos.NotificationAdapterFixture,
+        Skopos.AIAdapterFixture
       ]
 
-config :opsonde, Opsonde.Vault,
+config :skopos, Skopos.Vault,
   ciphers: [
     default:
       {Cloak.Ciphers.AES.GCM, tag: "AES.GCM.V1", key: :binary.copy(<<2>>, 32), iv_length: 12}
@@ -26,17 +26,17 @@ config :ash, policies: [show_policy_breakdowns?: true], disable_async?: true
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :opsonde, Opsonde.Repo,
+config :skopos, Skopos.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "opsonde_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "skopos_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :opsonde, OpsondeWeb.Endpoint,
+config :skopos, SkoposWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "PEzzxwuJMDeoaHf/ExTM7wFbTJKP/Zt2Pq2WzyoLYsBx5F57jPh0DqceHKyojAKn",
   server: false

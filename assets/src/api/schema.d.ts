@@ -1630,7 +1630,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Accept a canonical Opsonde Signal webhook */
+        /** Accept a canonical Skopos Signal webhook */
         post: operations["ingestGenericSignal"];
         delete?: never;
         options?: never;

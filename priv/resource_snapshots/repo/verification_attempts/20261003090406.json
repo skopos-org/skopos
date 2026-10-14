@@ -675,7 +675,7 @@
     "global": null,
     "strategy": null
   },
-  "repo": "Elixir.Opsonde.Repo",
+  "repo": "Elixir.Skopos.Repo",
   "schema": null,
   "table": "verification_attempts"
 }
