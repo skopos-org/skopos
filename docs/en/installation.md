@@ -46,7 +46,8 @@ Keep the existing secrets when changing or updating an installation.
 
 ## Install the CLI
 
-Download the executable for your computer and `SHA256SUMS` from the same release.
+Choose a release from [GitHub Releases](https://github.com/skopos-org/skopos/releases).
+Download the executable for your computer and that release's `SHA256SUMS`.
 
 | Platform | Release asset |
 | --- | --- |

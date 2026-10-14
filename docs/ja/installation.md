@@ -46,7 +46,8 @@ HTTPS、ポート、その他の設定は[設定](configuration.md)を参照し�
 
 ## CLIをインストールする
 
-端末に合った実行ファイルと`SHA256SUMS`を、同じリリースからダウンロードします。
+[GitHub Releases](https://github.com/skopos-org/skopos/releases)で利用するリリースを選びます。
+端末に合った実行ファイルと、そのリリースの`SHA256SUMS`をダウンロードします。
 
 | 環境 | 配布ファイル |
 | --- | --- |

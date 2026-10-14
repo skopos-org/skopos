@@ -29,8 +29,8 @@ Run `skopos --help` for command syntax.
 
 ## Inputs and output
 
-For a command that changes state, pass a JSON object using `--input FILE` or
-`--input -` for standard input. Specify the resource fields directly, as in the
+For commands with a JSON input, use `--input FILE` or `--input -` for standard
+input. Specify the resource fields directly, as in the
 [configuration examples](configuration.md).
 
 List commands return a page of results. Use `--limit` and `--after` to continue
