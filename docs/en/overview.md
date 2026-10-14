@@ -1,17 +1,15 @@
 # Overview
 
-Skopos is an AI-powered platform for autonomous infrastructure incident resolution,
-from the first alert to verified recovery. It reduces the burden of 24/7 Network
-Operations Center (NOC) operations by investigating incidents, carrying out
-permitted remediation, and checking whether the affected systems have recovered.
+Skopos uses AI to resolve infrastructure incidents, from the first alert to
+verified recovery. It takes on investigation and remediation to reduce the
+burden of 24/7 Network Operations Center (NOC) operations.
 
-AI chooses the next investigation or action from observations and previous
-results, rather than following a predefined runbook. When recovery cannot be
-confirmed within the configured authority and limits, Skopos hands the incident
-to a human with the evidence collected. Scheduled audits can also discover
-problems that monitoring has not reported.
+AI chooses its next action from the observed state and previous results.
+Skopos carries out permitted changes and checks whether they restored the
+affected system. If it cannot complete the response within your authority and
+limits, it hands the incident to an operator with the collected evidence.
 
-## Connections to your environment
+## How Skopos connects
 
 ```text
 Monitoring systems ── alerts ──> Skopos <── requests / results ──> AI services
@@ -21,43 +19,33 @@ Monitoring systems ── alerts ──> Skopos <── requests / results ─�
           observations / changes              authenticated API
                   │                                   │
                   ▼                                   ▼
-       Managed infrastructure                    Web and CLI
-     Linux · Kubernetes · IOS XE                     Operators
+         Your infrastructure                     Web and CLI
+                                                    Operators
 ```
 
-Monitoring systems deliver alerts through configured Signal connections. Skopos
-uses AI connections to interpret evidence and decide how to investigate or
-remediate an incident. Target connections provide access to the managed systems
-for observations, permitted changes, and fresh recovery checks. Skopos works with
-your existing monitoring and infrastructure; operators configure these
-connections and control the scope and authority of automation.
+Connect your monitoring system, AI service, and managed infrastructure to Skopos.
+Choose access methods such as SSH, HTTP APIs, NETCONF, RESTCONF, Redfish, or IPMI
+to match the system you manage. Add multiple access methods when needed.
 
-Connection protocols are selected independently of device identity. Linux can
-use SSH, Kubernetes uses its API, and Cisco IOS XE can use SSH/CLI, NETCONF, or
-RESTCONF. Check each configured connection against your environment; a connection
-check does not verify every device version or operation.
+## What you control
 
-## Incident history and control
+- **Incident response:** investigate, remediate, and verify recovery in one Case.
+- **Authority:** allow observation only, require human approval, require AI review,
+  or permit changes without approval.
+- **Limits:** bound response time, actions, related Targets, and AI usage.
+- **Audits:** schedule investigations without waiting for an alert.
+- **Evidence:** review observations, decisions, changes, and recovery results.
 
-The Web interface and CLI connect to the same authenticated server API. Operators
-can follow incidents, review proposed changes, approve actions in Ask mode, and
-inspect recovery results and reports.
+Configure and operate Skopos through Web or CLI.
 
-An incident is tracked as a **Case**. Its history records observations, AI
-decisions, proposed changes, operations, verification attempts, and reports.
-**Targets** represent managed infrastructure. Their **Access Methods** identify
-how Skopos connects to them, and **Providers** hold connection configuration and
-credentials for AI, monitoring, target access, inventory, and notifications.
+## Get started
 
-## Start here
+1. [Install Skopos](installation.md).
+2. [Connect your environment using Web or CLI](first-steps.md).
+3. [Manage incidents and audits](operations.md).
 
-1. [Install from source with Docker Compose](installation.md).
-2. [Review runtime configuration](configuration.md).
-3. [Create the initial administrator and connect your environment](first-steps.md).
-4. [Inspect Cases and maintain the installation](operations.md).
-5. [Use the CLI](cli.md) when working from a terminal.
+See [Configuration](configuration.md) for settings, [CLI](cli.md) for command
+usage, and [API reference](api.md) for integrations.
 
-For integration details, see the [API reference](api.md).
-
-For changes to the project or these guides, see [Contributing](contributing.md).
+For development, see [Contributing](contributing.md).
 Skopos is licensed under [Apache-2.0](../../LICENSE).

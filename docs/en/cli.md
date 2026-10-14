@@ -1,62 +1,62 @@
 # CLI
 
-The product CLI is an authenticated client of the Skopos server API. Its command
-language and JSON output are fixed English; `report read` prints the report's own
-language.
+Use the CLI to configure connections and authority, manage Targets, respond to
+incidents, schedule audits, and read reports.
 
-## Run from source
+[Install the CLI](installation.md), then follow [First-time setup](first-steps.md#cli)
+to connect it to a server and configure your environment.
 
-With the repository's Elixir/Erlang toolchain installed, fetch the CLI dependencies
-and display help:
+## Commands
+
+| Task | Commands |
+| --- | --- |
+| Server and sign-in | `config set-server`, `config show`, `auth login`, `auth status`, `auth logout` |
+| Accounts | `account list`, `account create`, `account change-role` |
+| Connections | `provider services`, `provider list`, `provider create`, `provider check`, `provider enable`, `provider update` |
+| AI roles and authority | `ai-role list`, `provider usage`, `authority show`, `authority set` |
+| Targets | `target-type list`, `target create`, `target list`, `target show`, `target update` |
+| Access methods | `access-method create`, `access-method check`, `access-method list`, `access-method update` |
+| Identities and relationships | `identity create`, `identity list`, `relationship create`, `relationship list` |
+| Inventory | `inventory preview-manual`, `inventory preview-provider`, `inventory rows`, `inventory apply` |
+| Incidents | `case create`, `case show`, `case timeline`, `case resume`, `case cancel` |
+| Decisions and results | `proposal show`, `proposal decide`, `operation show`, `verification show` |
+| Monitoring | `signal list`, `signal show`, `signal events` |
+| Audits | `audit schedule`, `audit list`, `audit-run list`, `audit-run show` |
+| Reports and delivery | `report list`, `report read`, `report summary`, `delivery create`, `delivery show` |
+| Target files | `file upload`, `file list`, `file download`, `file revoke` |
+
+Run `skopos --help` for command syntax.
+
+## Inputs and output
+
+For a command that changes state, pass a JSON object using `--input FILE` or
+`--input -` for standard input. Specify the resource fields directly, as in the
+[configuration examples](configuration.md).
+
+List commands return a page of results. Use `--limit` and `--after` to continue
+through a list. Use the returned IDs and current revisions for subsequent commands.
+
+Provider and audit-schedule registration commands print their registration ID
+to standard error before sending the request. Keep it so you can check the
+original registration if its response is lost.
+
+## Waiting for a result
 
 ```sh
-MIX_ENV=cli mix deps.get
-MIX_ENV=cli mix run --no-halt -- --help
-```
-
-Prefix commands below with `MIX_ENV=cli mix run --no-halt --` when running from
-source. For example:
-
-```sh
-MIX_ENV=cli mix run --no-halt -- config set-server http://localhost:4000
-MIX_ENV=cli mix run --no-halt -- auth login
-MIX_ENV=cli mix run --no-halt -- auth status
-```
-
-Login opens the server's browser authentication flow and saves a session locally.
-Use `config show` to inspect the configured server and authentication status;
-`auth logout` signs out the CLI session.
-
-## Read current state
-
-The following uses `skopos` as shorthand for the source invocation above:
-
-```sh
-skopos target list --limit 20
-skopos provider list --limit 20
-skopos case list --limit 20
-skopos case show CASE_ID
 skopos case wait CASE_ID --interval 1000 --timeout 60
-skopos operation show OPERATION_ID
 skopos operation wait OPERATION_ID --interval 1000 --timeout 60
+skopos verification wait VERIFICATION_ID --interval 1000 --timeout 60
+skopos delivery wait DELIVERY_ID --interval 1000 --timeout 60
 ```
 
-Replace the identifiers with IDs returned by the server. List commands paginate
-using `--limit` and `--after`. Waiting polls existing work; it does not resubmit
-the operation.
+`--interval` is in milliseconds and `--timeout` is in seconds.
 
-Mutation commands accept `--input FILE` or `--input -` for JSON on standard input.
-The input contains resource fields directly; the CLI adds the API envelope.
-Provider and audit-schedule registration IDs are emitted to standard error before
-dispatch. Retain those IDs to check the original registration after a lost
-response.
-
-## Exit status
+## Exit codes
 
 | Code | Meaning |
 | --- | --- |
 | `0` | Succeeded or resolved |
-| `2` | Usage error |
+| `2` | Invalid command usage |
 | `3` | Authentication error |
 | `4` | Rejected request or local error |
 | `5` | Transport error |
@@ -68,6 +68,5 @@ response.
 | `15` | Unknown |
 | `16` | Cancellation requested |
 
-Automation should inspect the returned status and identifiers as well as the exit
-code. In particular, transport failure or `unknown` does not prove that a remote
-effect did not occur.
+In automation, check the result status and IDs as well as the exit code.
+A transport error or unknown result can occur after a remote change.

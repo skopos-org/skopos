@@ -1,79 +1,81 @@
 # Installation
 
-This guide runs Skopos from source using the repository's Dockerfile and
-`compose.yaml`. You need Git, Docker with the Compose plugin, and OpenSSL. Docker
-must have network access to download the build images and dependencies. The
-Dockerfile supplies the Elixir, Erlang, Node, and Rust build tools.
+Run the Skopos server with Docker Compose and its release container image.
+Choose Web or CLI to operate Skopos. Install the CLI only if you will use it.
 
-## Get the source
+## Install the server
+
+You need Docker with the Compose plugin, curl, and OpenSSL.
+
+Choose a version from [GitHub Releases](https://github.com/skopos-org/skopos/releases).
+Replace `RELEASE_VERSION` below with the version number without the leading `v`.
 
 ```sh
-git clone https://github.com/skopos-org/skopos.git
+mkdir skopos
 cd skopos
+export SKOPOS_VERSION=RELEASE_VERSION
+curl --fail --location \
+  "https://raw.githubusercontent.com/skopos-org/skopos/v${SKOPOS_VERSION}/compose.yaml" \
+  --output compose.yaml
 ```
 
-## Configure the installation
-
-Create a private `.env` file at the repository root. Run the following once for a
-new installation:
+Create the installation settings once. Set `SKOPOS_PUBLIC_URL` to the URL
+operators will use; the example below uses the local server.
 
 ```sh
 umask 077
 cat > .env <<EOF
+SKOPOS_VERSION=${SKOPOS_VERSION}
 POSTGRES_PASSWORD=$(openssl rand -hex 32)
 SKOPOS_CREDENTIALS_KEY=$(openssl rand -base64 32)
 SKOPOS_TOKEN_SIGNING_SECRET=$(openssl rand -hex 32)
 SECRET_KEY_BASE=$(openssl rand -hex 64)
-SKOPOS_IMAGE=skopos-local
 SKOPOS_PUBLIC_URL=http://localhost:4000
 SKOPOS_PORT=4000
 EOF
-```
-
-Retain this file alongside your database backups. In particular, the credentials
-key is needed to decrypt saved Provider credentials. Re-running this command
-would replace the installation's existing secrets.
-
-The local image name identifies the image built by Compose. For access
-through another hostname or a reverse proxy, set `SKOPOS_PUBLIC_URL` to the
-external HTTP(S) origin before starting the server. See
-[Configuration](configuration.md).
-
-## Build and start
-
-```sh
-docker compose up --build -d
+docker compose pull
+docker compose up --no-build -d
 docker compose ps --all
-docker compose logs migrate server
 ```
 
-Compose starts PostgreSQL, runs database migrations, and then starts the server.
-The `migrate` service is expected to exit successfully; `server` should remain
-running. PostgreSQL data lives in the named `database` volume.
+Check that `migrate` exited with code 0 and `server` is running.
+Open the configured public URL and continue with [First-time setup](first-steps.md).
 
-Open <http://localhost:4000> for the local configuration above and follow
-[First-time setup](first-steps.md).
+See [Configuration](configuration.md) for HTTPS, ports, and other settings.
+Keep the existing secrets when changing or updating an installation.
 
-## Stop and start
+## Install the CLI
+
+Download the executable for your computer and `SHA256SUMS` from the same release.
+
+| Platform | Release asset |
+| --- | --- |
+| Linux x86-64 | `skopos-VERSION-linux_x86_64` |
+| Linux ARM64 | `skopos-VERSION-linux_aarch64` |
+| macOS Intel | `skopos-VERSION-macos_x86_64` |
+| macOS Apple Silicon | `skopos-VERSION-macos_aarch64` |
+| Windows x86-64 | `skopos-VERSION-windows_x86_64.exe` |
+
+Verify the download against `SHA256SUMS`. On Linux and macOS, give the executable
+execute permission. Rename it to `skopos` (`skopos.exe` on Windows) and place it
+in a directory on your `PATH`.
 
 ```sh
-docker compose stop
-docker compose start database server
+skopos --version
+skopos --help
 ```
 
-Stopping services preserves the database volume.
+Continue with the [CLI setup path](first-steps.md#cli).
 
-## Update an installation
+## Update the server
 
-Back up the database and retain the installation's secrets before updating. Check
-out the source revision you intend to deploy, then rebuild and start the services:
+Read the selected release's notes and download its matching `compose.yaml`.
+Change `SKOPOS_VERSION` in the existing `.env` to that release's version, then run:
 
 ```sh
-docker compose up --build -d
+docker compose pull
+docker compose up --no-build -d
 docker compose ps --all
-docker compose logs migrate server
 ```
 
-Confirm that migrations completed successfully, then sign in and check the
-configured connections and recent Cases. See [Operations](operations.md) for
-backup and recovery instructions.
+Confirm that `migrate` exited with code 0 and `server` is running.

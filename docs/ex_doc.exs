@@ -14,16 +14,28 @@ locale =
 
 pages = ~w(overview installation configuration first-steps operations cli api contributing)
 
-language_links =
+language_options =
   locales
   |> Enum.sort()
-  |> Enum.map_join(" · ", fn {code, options} ->
-    "<a href=\"../#{code}/index.html\" hreflang=\"#{code}\" lang=\"#{code}\">#{Keyword.fetch!(options, :label)}</a>"
+  |> Enum.map_join("\n", fn {code, options} ->
+    selected = if code == language, do: " selected", else: ""
+    label = Plug.HTML.html_escape(Keyword.fetch!(options, :label))
+    "<option value=\"../#{code}/overview.html\" lang=\"#{code}\"#{selected}>#{label}</option>"
   end)
 
 language_navigation =
   if map_size(locales) > 1 do
-    "<nav aria-label=\"#{Keyword.fetch!(locale, :language_navigation)}\">#{language_links}</nav>"
+    label = Plug.HTML.html_escape(Keyword.fetch!(locale, :language_navigation))
+    filenames = Enum.map_join(pages, " ", &"#{&1}.html")
+
+    """
+    <nav id="doc-language-navigation" aria-label="#{label}" hidden>
+      <select id="doc-language" aria-label="#{label}" data-pages="#{filenames} index.html license.html search.html">
+        #{language_options}
+      </select>
+    </nav>
+    <script src="assets/language-switcher.js"></script>
+    """
   else
     ""
   end
@@ -40,5 +52,9 @@ language_navigation =
   extras:
     Enum.map(pages, &"docs/#{language}/#{&1}.md") ++
       [{:LICENSE, [filename: "license", title: Keyword.fetch!(locale, :license_title)]}],
-  before_closing_footer_tag: fn :html -> language_navigation end
+  assets: %{"docs/assets" => "assets"},
+  before_closing_head_tag: fn :html ->
+    ~s(<link rel="stylesheet" href="assets/language-switcher.css">)
+  end,
+  before_closing_body_tag: fn :html -> language_navigation end
 ] ++ Keyword.fetch!(locale, :docs)
