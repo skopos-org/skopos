@@ -918,7 +918,9 @@ defmodule Skopos.Targets.IOSXENETCONFTest do
 
   test "dynamic NETCONF subscription interleaves notifications with same-session RPC replies",
        context do
-    context = generic_netconf_context(context)
+    # The 300 ms notification window must fit after SSH and subscription setup.
+    # These tests exercise follow-up replies, not the setup timeout boundary.
+    context = context |> Map.put(:netconf_timeout, 2_000) |> generic_netconf_context()
     Agent.update(context.agent, &%{&1 | mode: :dynamic_subscription})
 
     subscription =
@@ -949,7 +951,7 @@ defmodule Skopos.Targets.IOSXENETCONFTest do
   end
 
   test "dynamic NETCONF subscription does not accept a mismatched follow-up reply", context do
-    context = generic_netconf_context(context)
+    context = context |> Map.put(:netconf_timeout, 2_000) |> generic_netconf_context()
     Agent.update(context.agent, &%{&1 | mode: :dynamic_wrong_followup_id})
 
     subscription =
@@ -964,7 +966,7 @@ defmodule Skopos.Targets.IOSXENETCONFTest do
   end
 
   test "dynamic NETCONF subscription retains events on interrupted follow-up", context do
-    context = generic_netconf_context(context)
+    context = context |> Map.put(:netconf_timeout, 2_000) |> generic_netconf_context()
     Agent.update(context.agent, &%{&1 | mode: :dynamic_close_before_followup_reply})
 
     subscription =
@@ -979,7 +981,7 @@ defmodule Skopos.Targets.IOSXENETCONFTest do
   end
 
   test "dynamic NETCONF subscription preserves follow-up rpc-error details", context do
-    context = generic_netconf_context(context)
+    context = context |> Map.put(:netconf_timeout, 2_000) |> generic_netconf_context()
     Agent.update(context.agent, &%{&1 | mode: :dynamic_rpc_error})
 
     subscription =
