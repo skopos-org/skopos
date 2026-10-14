@@ -11,4 +11,6 @@ native/**/target
 test
 .env
 AGENTS.md
+docs
+doc
 erl_crash.dump

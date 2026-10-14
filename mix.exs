@@ -4,6 +4,9 @@ defmodule Skopos.MixProject do
   def project do
     [
       app: :skopos,
+      name: "Skopos",
+      source_url: "https://github.com/skopos-org/skopos",
+      docs: &docs/0,
       version: "0.1.1",
       elixir: "~> 1.18",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -66,6 +69,7 @@ defmodule Skopos.MixProject do
 
   defp server_deps do
     [
+      {:ex_doc, "~> 0.40.4", only: :dev, runtime: false},
       {:ash_state_machine, "~> 0.2.13"},
       {:req_llm, "~> 1.24"},
       {:finch, "~> 0.23.0"},
@@ -105,6 +109,11 @@ defmodule Skopos.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"}
     ]
+  end
+
+  defp docs do
+    {options, _binding} = Code.eval_file("docs/ex_doc.exs")
+    options
   end
 
   defp releases(:cli) do

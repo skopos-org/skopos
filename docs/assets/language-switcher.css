@@ -1,0 +1,31 @@
+#doc-language-navigation {
+  flex-shrink: 0;
+}
+
+#doc-language {
+  height: 40px;
+  max-width: 12rem;
+  padding: 0 0.65rem;
+  border: 1px solid var(--searchBarBorder);
+  border-radius: var(--borderRadius-base);
+  background: var(--searchSearch);
+  color: var(--textBody);
+  font: inherit;
+  cursor: pointer;
+}
+
+#doc-language:focus-visible {
+  outline: 2px solid var(--searchBarFocusColor);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .top-search .search-settings {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .top-search .search-bar {
+    flex-basis: 100%;
+  }
+}
