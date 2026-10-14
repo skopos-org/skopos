@@ -347,9 +347,12 @@ defmodule Skopos.Targets.IOSXESSHTest do
            ]
 
     Agent.update(context.agent, &%{&1 | delay_ms: 1_000})
-    cancel_at = System.monotonic_time(:millisecond) + 200
+    scripts_before_dispatch = length(scripts(context))
 
-    assert %Target.EffectResult{status: :unknown} =
+    assert %Target.EffectResult{
+             status: :unknown,
+             details: %{"error" => "SSH operation was cancelled"}
+           } =
              request(
                generic,
                :effect,
@@ -360,7 +363,7 @@ defmodule Skopos.Targets.IOSXESSHTest do
              )
              |> Targets.clear_target_request!(actor: context.operator)
              |> Targets.dispatch_target_effect!(
-               %{cancelled?: fn -> System.monotonic_time(:millisecond) >= cancel_at end},
+               %{cancelled?: fn -> length(scripts(context)) > scripts_before_dispatch end},
                actor: context.operator,
                authorize?: false
              )
@@ -714,7 +717,7 @@ defmodule Skopos.Targets.IOSXESSHTest do
 
   test "SSH route preserves post-dispatch cancellation and connection failures", context do
     Agent.update(context.agent, &%{&1 | delay_ms: 1_000})
-    cancel_at = System.monotonic_time(:millisecond) + 200
+    scripts_before_dispatch = length(scripts(context))
 
     effect =
       request(
@@ -728,13 +731,18 @@ defmodule Skopos.Targets.IOSXESSHTest do
 
     clearance = Targets.clear_target_request!(effect, actor: context.operator)
 
-    assert %Target.EffectResult{status: :unknown} =
+    assert %Target.EffectResult{
+             status: :unknown,
+             details: %{"error" => "SSH operation was cancelled"}
+           } =
              Targets.dispatch_target_effect!(
                clearance,
-               %{cancelled?: fn -> System.monotonic_time(:millisecond) >= cancel_at end},
+               %{cancelled?: fn -> length(scripts(context)) > scripts_before_dispatch end},
                actor: context.operator,
                authorize?: false
              )
+
+    assert length(scripts(context)) == scripts_before_dispatch + 1
 
     unreachable =
       Providers.create_provider!(
