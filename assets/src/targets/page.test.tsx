@@ -109,7 +109,7 @@ test("The Target page opens on topology with connected and isolated Targets", as
 test("Target inventory searches server pages with truthful counts and no global detail reads", async () => {
   await i18n.changeLanguage("en");
   const requests: URL[] = [];
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   wire.mockImplementation((request: Request) => {
     const url = new URL(request.url);
     requests.push(url);

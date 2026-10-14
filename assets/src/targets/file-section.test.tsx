@@ -492,7 +492,7 @@ test("A lost upload chunk reply refreshes the known file outside the visible pag
 
 test("Case creation refetches a selected ready file and submits its exact reference without bytes", async () => {
   await i18n.changeLanguage("en");
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   const reference = {
     id: "file-1",
     target_id: "target-1",
@@ -565,7 +565,7 @@ afterEach(() => {
 
 test("download requests authenticated binary chunks and refuses corrupt bytes before saving", async () => {
   await i18n.changeLanguage("en");
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   const file = {
     id: "file-1",
     target_id: "target-1",
@@ -618,7 +618,7 @@ test("download requests authenticated binary chunks and refuses corrupt bytes be
 
 test("operator uploads exact binary and can use only its completed reference in a Case", async () => {
   await i18n.changeLanguage("en");
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   const bytes: number[] = [];
   let file: Record<string, unknown> | null = null;
   wire.mockImplementation(async (request: Request) => {
@@ -688,7 +688,7 @@ test("operator uploads exact binary and can use only its completed reference in 
 
 test("after a lost chunk reply, reloading exposes persisted progress and an explicit resume sends only remaining bytes", async () => {
   await i18n.changeLanguage("en");
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   const bytes: number[] = [];
   let file: Record<string, unknown> | null = null;
   let lost = false;

@@ -156,7 +156,7 @@ static void close_session(struct ipmi_intf *intf) {
     explicit_bzero(&intf->ssn_params, sizeof(intf->ssn_params));
 }
 
-int opsonde_ipmi_command(const char *host, uint16_t port, const char *user,
+int skopos_ipmi_command(const char *host, uint16_t port, const char *user,
                         const char *password, uint8_t privilege, uint8_t cipher,
                         uint64_t timeout_ms,
                         const struct command *command, uint8_t *completion,
@@ -247,7 +247,7 @@ static struct ipmi_rs *sol_control(struct ipmi_intf *intf, uint8_t command,
     return response;
 }
 
-int opsonde_ipmi_sol(const char *host, uint16_t port, const char *user,
+int skopos_ipmi_sol(const char *host, uint16_t port, const char *user,
                      const char *password, uint8_t privilege, uint8_t cipher,
                      uint64_t timeout_ms,
                      const struct sol_exchange *exchange, uint8_t *output,

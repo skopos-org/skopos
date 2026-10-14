@@ -46,7 +46,7 @@ export function PeriodReportDocument({
     >
       <header className="report-masthead">
         <div className="report-brand">
-          <span className="report-brand-mark" /> OPSONDE{" "}
+          <span className="report-brand-mark" /> SKOPOS{" "}
           <span className="report-kind">/ {ja ? "運用集計" : "OPERATIONS"}</span>
         </div>
         <div className="report-issued">

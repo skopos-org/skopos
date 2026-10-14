@@ -54,7 +54,7 @@ test("Signal registration retains only its original ID after lost acknowledgemen
       const input = await request.json();
       registeredId = input.provider.registration_id;
       expect(
-        JSON.parse(sessionStorage.getItem("opsonde.provider-registration:account-1:signal")!),
+        JSON.parse(sessionStorage.getItem("skopos.provider-registration:account-1:signal")!),
       ).toEqual({ id: registeredId });
       return Response.json({ error: { code: "internal_error" } }, { status: 503 });
     }
@@ -82,7 +82,7 @@ test("Signal registration retains only its original ID after lost acknowledgemen
   await user.click(screen.getByRole("button", { name: i18n.t("cases.addSignal") }));
   await screen.findByText(i18n.t("setup.registrationUnknown"));
   expect(posts).toBe(1);
-  expect(sessionStorage.getItem("opsonde.provider-registration:account-1:signal")).not.toContain(
+  expect(sessionStorage.getItem("skopos.provider-registration:account-1:signal")).not.toContain(
     "private-secret-for-registration",
   );
   view.unmount();
@@ -91,7 +91,7 @@ test("Signal registration retains only its original ID after lost acknowledgemen
   await screen.findByText("Signal registration confirmed");
   expect(posts).toBe(1);
   expect(reads).toEqual([`/api/v1/providers/${registeredId}`]);
-  expect(sessionStorage.getItem("opsonde.provider-registration:account-1:signal")).toBeNull();
+  expect(sessionStorage.getItem("skopos.provider-registration:account-1:signal")).toBeNull();
 });
 
 test("registration storage failure sends no request and preserves the entered form", async () => {
@@ -145,13 +145,13 @@ test("a rejected registration keeps input and clears only its original identity"
   expect(posts).toBe(1);
   expect(screen.getByLabelText(i18n.t("cases.name"))).toHaveProperty("value", "Rejected Signal");
   expect(screen.queryByText(i18n.t("setup.registrationUnknown"))).toBeNull();
-  expect(sessionStorage.getItem("opsonde.provider-registration:account-1:signal")).toBeNull();
+  expect(sessionStorage.getItem("skopos.provider-registration:account-1:signal")).toBeNull();
 });
 
 test("a saved AI registration can be confirmed even when its service catalog is unavailable", async () => {
   await i18n.changeLanguage("en");
   sessionStorage.setItem(
-    "opsonde.provider-registration:account-1:ai",
+    "skopos.provider-registration:account-1:ai",
     JSON.stringify({ id: id(51) }),
   );
   const methods: string[] = [];
@@ -218,7 +218,7 @@ test("AI registration sends the composed model and role input with one original 
     });
     expect(input.provider.configuration).not.toHaveProperty("max_tokens");
     expect(
-      JSON.parse(sessionStorage.getItem("opsonde.provider-registration:account-1:ai")!),
+      JSON.parse(sessionStorage.getItem("skopos.provider-registration:account-1:ai")!),
     ).toEqual({ id: input.provider.registration_id });
     return Response.json(
       {
@@ -260,7 +260,7 @@ test("AI registration sends the composed model and role input with one original 
   await user.click(screen.getByRole("button", { name: i18n.t("setup.addConnection") }));
   await screen.findByText("AI registration confirmed");
   expect(posts).toBe(1);
-  expect(sessionStorage.getItem("opsonde.provider-registration:account-1:ai")).toBeNull();
+  expect(sessionStorage.getItem("skopos.provider-registration:account-1:ai")).toBeNull();
 });
 
 test("a former account registration acknowledgement cannot navigate or clear its saved identity", async () => {
@@ -304,11 +304,11 @@ test("a former account registration acknowledgement cannot navigate or clear its
   });
   expect(screen.queryByText("Signal registration confirmed")).toBeNull();
   expect(screen.getByLabelText(i18n.t("cases.name"))).toHaveProperty("value", "");
-  expect(sessionStorage.getItem("opsonde.provider-registration:account-1:signal")).toBe(
+  expect(sessionStorage.getItem("skopos.provider-registration:account-1:signal")).toBe(
     JSON.stringify({ id: registeredId }),
   );
   expect(
-    sessionStorage.getItem("opsonde.provider-registration:different-account:signal"),
+    sessionStorage.getItem("skopos.provider-registration:different-account:signal"),
   ).toBeNull();
   expect(posts).toBe(1);
 });

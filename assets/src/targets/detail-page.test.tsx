@@ -257,7 +257,7 @@ test("Method check response loss and refresh failure never repeat the remote che
 
 test("scoped identity and relationship pages resolve exact peer and boundary labels over HTTP", async () => {
   await i18n.changeLanguage("en");
-  sessionStorage.setItem("opsonde.session", "fixture-token");
+  sessionStorage.setItem("skopos.session", "fixture-token");
   const reads: URL[] = [];
   wire.mockImplementation(async (request: Request) => {
     expect(request.headers.get("Authorization")).toBe("Bearer fixture-token");

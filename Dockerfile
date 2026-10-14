@@ -43,7 +43,7 @@ COPY priv priv
 COPY config/runtime.exs config/
 COPY --from=assets /app/priv/static priv/static
 
-RUN mix compile && mix release opsonde_server
+RUN mix compile && mix release skopos_server
 
 FROM ${RUNNER_IMAGE} AS server
 
@@ -51,9 +51,9 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends ca-certificates libncurses6 libstdc++6 openssl \
   && rm -rf /var/lib/apt/lists/*
 
-ARG OPSONDE_VERSION=0.1.1
-LABEL org.opencontainers.image.title="Opsonde" \
-      org.opencontainers.image.version="${OPSONDE_VERSION}"
+ARG SKOPOS_VERSION=0.1.1
+LABEL org.opencontainers.image.title="Skopos" \
+      org.opencontainers.image.version="${SKOPOS_VERSION}"
 
 ENV LANG=C.UTF-8 \
     MIX_ENV=prod \
@@ -61,11 +61,11 @@ ENV LANG=C.UTF-8 \
     PORT=4000
 
 WORKDIR /app
-RUN useradd --create-home --uid 10001 opsonde
-COPY --from=builder --chown=opsonde:opsonde /app/_build/prod/rel/opsonde_server ./
+RUN useradd --create-home --uid 10001 skopos
+COPY --from=builder --chown=skopos:skopos /app/_build/prod/rel/skopos_server ./
 
-USER opsonde
+USER skopos
 EXPOSE 4000
 
-ENTRYPOINT ["/app/bin/opsonde_server"]
+ENTRYPOINT ["/app/bin/skopos_server"]
 CMD ["start"]

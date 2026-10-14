@@ -30,7 +30,7 @@ erl_crash.dump
 /.env
 
 # Ignore package tarball (built via "mix hex.build").
-opsonde-*.tar
+skopos-*.tar
 
 # Project-local planning and agent instructions are not product source.
 /.beads/

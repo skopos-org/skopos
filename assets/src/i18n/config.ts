@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import en from "@/i18n/en";
 import ja from "@/i18n/ja";
 
-const localeKey = "opsonde.locale";
+const localeKey = "skopos.locale";
 export const supportedLocales = [
   { value: "en", label: "English", resource: en },
   { value: "ja", label: "日本語", resource: ja },

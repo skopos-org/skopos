@@ -159,7 +159,7 @@ struct Command {
 }
 
 extern "C" {
-    fn opsonde_ipmi_sol(
+    fn skopos_ipmi_sol(
         host: *const c_char,
         port: u16,
         user: *const c_char,
@@ -173,7 +173,7 @@ extern "C" {
         cancelled: extern "C" fn(*const c_void) -> i32,
         cancellation: *const c_void,
     ) -> i32;
-    fn opsonde_ipmi_command(
+    fn skopos_ipmi_command(
         host: *const c_char,
         port: u16,
         user: *const c_char,
@@ -234,7 +234,7 @@ fn send_command(
     let mut length = 0;
     let mut data = vec![0u8; 1024];
     let status = unsafe {
-        opsonde_ipmi_command(
+        skopos_ipmi_command(
             host.as_ptr(),
             target.port(),
             user.as_ptr(),
@@ -310,7 +310,7 @@ fn sol_exchange(
     };
     let mut output = vec![0u8; request.max_output_bytes as usize];
     let status = unsafe {
-        opsonde_ipmi_sol(
+        skopos_ipmi_sol(
             host.as_ptr(),
             target.port(),
             user.as_ptr(),
@@ -347,4 +347,4 @@ fn sol_exchange(
     }
 }
 
-rustler::init!("Elixir.Opsonde.Transports.IPMI");
+rustler::init!("Elixir.Skopos.Transports.IPMI");

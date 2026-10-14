@@ -1,4 +1,4 @@
-# Opsonde
+# Skopos
 
 To start your Phoenix server:
 

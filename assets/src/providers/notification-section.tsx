@@ -53,7 +53,7 @@ function Destinations({ canManage }: Props) {
     name: string;
     check: Provider["check"] | null;
   } | null>(null);
-  const storageKey = `opsonde.notification-request:${account?.id}`;
+  const storageKey = `skopos.notification-request:${account?.id}`;
   const [saved, setSaved] = useState(() =>
     readStoredRequest(storageKey, (value): Intent => {
       if (

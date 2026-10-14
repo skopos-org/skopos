@@ -32,7 +32,7 @@ function page(data: unknown[], next: string | null = null) {
 }
 function oidc() {
   return Response.json({
-    data: { enabled: false, callback_uri: "https://opsonde.example/callback" },
+    data: { enabled: false, callback_uri: "https://skopos.example/callback" },
   });
 }
 function show(role = "admin") {

@@ -10,17 +10,17 @@ import Config
 if config_env() != :cli do
   config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
-  config :opsonde, :public_url, "http://localhost:4000"
+  config :skopos, :public_url, "http://localhost:4000"
 
   ai_concurrency = 10
 
-  config :opsonde, Oban,
+  config :skopos, Oban,
     engine: Oban.Engines.Basic,
     notifier: Oban.Notifiers.Postgres,
     queues: [resolver: ai_concurrency, operations: 10, notifications: 5, audits: 5],
     lifeline: [rescue_after: {12, :minutes}],
     pruner: [max_age: {1, :day}],
-    repo: Opsonde.Repo
+    repo: Skopos.Repo
 
   config :req_llm,
     stream_pool_protocols: [:http1],
@@ -77,41 +77,41 @@ if config_env() != :cli do
       "Ash.Domain": [section_order: [:resources, :policies, :authorization, :domain, :execution]]
     ]
 
-  config :opsonde,
-    ecto_repos: [Opsonde.Repo],
+  config :skopos,
+    ecto_repos: [Skopos.Repo],
     generators: [timestamp_type: :utc_datetime, binary_id: true],
     ash_domains: [
-      Opsonde.Reports,
-      Opsonde.Audits,
-      Opsonde.Signals,
-      Opsonde.Notifications,
-      Opsonde.Cases,
-      Opsonde.Targets,
-      Opsonde.Providers,
-      Opsonde.Accounts
+      Skopos.Reports,
+      Skopos.Audits,
+      Skopos.Signals,
+      Skopos.Notifications,
+      Skopos.Cases,
+      Skopos.Targets,
+      Skopos.Providers,
+      Skopos.Accounts
     ],
     provider_adapters: [
-      Opsonde.AI.ReqLLM,
-      Opsonde.Inventories.NetBox.API,
-      Opsonde.Notifications.HTTP.Webhook,
-      Opsonde.Signals.Alertmanager.Webhook,
-      Opsonde.Signals.Generic.Webhook,
-      Opsonde.Signals.Zabbix.Webhook,
-      Opsonde.Targets.Adapters.SSH,
-      Opsonde.Targets.Adapters.HTTP,
-      Opsonde.Targets.Adapters.NETCONF,
-      Opsonde.Targets.Adapters.RESTCONF,
-      Opsonde.Targets.Adapters.IPMI,
-      Opsonde.Targets.Adapters.Redfish,
-      Opsonde.Targets.Profiles.HPEILO.Redfish,
-      Opsonde.Targets.Profiles.HPEILO.IPMI,
-      Opsonde.Targets.Profiles.DellIDRAC.Redfish,
-      Opsonde.Targets.Profiles.DellIDRAC.IPMI,
-      Opsonde.Targets.Profiles.IOSXE.NETCONF,
-      Opsonde.Targets.Profiles.IOSXE.RESTCONF,
-      Opsonde.Targets.Profiles.IOSXE.SSH,
-      Opsonde.Targets.Adapters.Kubernetes,
-      Opsonde.Targets.Profiles.Linux.SSH
+      Skopos.AI.ReqLLM,
+      Skopos.Inventories.NetBox.API,
+      Skopos.Notifications.HTTP.Webhook,
+      Skopos.Signals.Alertmanager.Webhook,
+      Skopos.Signals.Generic.Webhook,
+      Skopos.Signals.Zabbix.Webhook,
+      Skopos.Targets.Adapters.SSH,
+      Skopos.Targets.Adapters.HTTP,
+      Skopos.Targets.Adapters.NETCONF,
+      Skopos.Targets.Adapters.RESTCONF,
+      Skopos.Targets.Adapters.IPMI,
+      Skopos.Targets.Adapters.Redfish,
+      Skopos.Targets.Profiles.HPEILO.Redfish,
+      Skopos.Targets.Profiles.HPEILO.IPMI,
+      Skopos.Targets.Profiles.DellIDRAC.Redfish,
+      Skopos.Targets.Profiles.DellIDRAC.IPMI,
+      Skopos.Targets.Profiles.IOSXE.NETCONF,
+      Skopos.Targets.Profiles.IOSXE.RESTCONF,
+      Skopos.Targets.Profiles.IOSXE.SSH,
+      Skopos.Targets.Adapters.Kubernetes,
+      Skopos.Targets.Profiles.Linux.SSH
     ]
 
   config :phoenix, :filter_parameters, [
@@ -125,15 +125,15 @@ if config_env() != :cli do
   config :tzdata, :autoupdate, :disabled
 
   # Configure the endpoint
-  config :opsonde, OpsondeWeb.Endpoint,
+  config :skopos, SkoposWeb.Endpoint,
     url: [host: "localhost"],
     adapter: Bandit.PhoenixAdapter,
     http: [http_1_options: [max_request_line_length: 16_384]],
     render_errors: [
-      formats: [json: OpsondeWeb.ErrorJSON],
+      formats: [json: SkoposWeb.ErrorJSON],
       layout: false
     ],
-    pubsub_server: Opsonde.PubSub,
+    pubsub_server: Skopos.PubSub,
     live_view: [signing_salt: "JPQtOoBk"]
 
   # Configure Elixir's Logger

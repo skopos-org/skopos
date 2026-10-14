@@ -55,7 +55,7 @@ export async function uploadTargetFile(
   }
   const digest = bytesToHex(hash.digest());
   const media = input.type || "application/octet-stream";
-  const storageKey = `opsonde.file-upload:${targetId}:${digest}:${input.name}`;
+  const storageKey = `skopos.file-upload:${targetId}:${digest}:${input.name}`;
   const uploadKey = sessionStorage.getItem(storageKey) ?? crypto.randomUUID();
   sessionStorage.setItem(storageKey, uploadKey);
   let file = resumeId

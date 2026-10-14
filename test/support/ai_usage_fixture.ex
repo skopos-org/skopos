@@ -1,7 +1,7 @@
-defmodule Opsonde.TestAIUsage do
+defmodule Skopos.TestAIUsage do
   @moduledoc false
 
-  alias Opsonde.Providers
+  alias Skopos.Providers
 
   def configure!(provider_id, scope, priority, actor) do
     current = assignments(provider_id)

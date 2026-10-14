@@ -178,7 +178,7 @@ export function OIDCSetup({ canManage, onError }: Props) {
                   name="issuer"
                   type="url"
                   defaultValue={provider?.issuer}
-                  placeholder="https://id.example.com/realms/opsonde"
+                  placeholder="https://id.example.com/realms/skopos"
                   required
                 />
               </div>

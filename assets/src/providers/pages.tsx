@@ -246,7 +246,7 @@ function ProviderCreation({ kind }: { kind: ProviderPageKind }) {
   const [error, setError] = useState("");
   const [services, setServices] = useState<AIService[] | null>(null);
   const [serviceQuery, setServiceQuery] = useState("");
-  const storageKey = `opsonde.provider-registration:${account?.id}:${kind}`;
+  const storageKey = `skopos.provider-registration:${account?.id}:${kind}`;
   const [saved, setSaved] = useState(() =>
     readStoredRequest(storageKey, (value): { id: string } => {
       if (

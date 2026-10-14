@@ -17,7 +17,7 @@ export function AutomaticReportSetting({ refreshKey }: { refreshKey: number }) {
   const { t } = useTranslation();
   const { account } = useAuthentication();
   const canManage = account?.role === "admin";
-  const storageKey = `opsonde.automatic-report-setting:${account?.id}`;
+  const storageKey = `skopos.automatic-report-setting:${account?.id}`;
   const [saved, setSaved] = useState(() =>
     readStoredRequest(storageKey, (value): Intent => {
       if (

@@ -81,7 +81,7 @@ function CreateForm({ initialReportId, onEnqueued, onClose }: Props) {
   const [provider, setProvider] = useState<Provider | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  const storageKey = `opsonde.delivery-request:${account?.id}`;
+  const storageKey = `skopos.delivery-request:${account?.id}`;
   const [saved, setSaved] = useState(() =>
     readStoredRequest(storageKey, (value): DeliveryRequest => {
       if (

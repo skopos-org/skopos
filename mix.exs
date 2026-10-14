@@ -1,14 +1,14 @@
-defmodule Opsonde.MixProject do
+defmodule Skopos.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :opsonde,
+      app: :skopos,
       version: "0.1.1",
       elixir: "~> 1.18",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() in [:prod, :cli],
-      default_release: if(Mix.env() == :cli, do: :opsonde, else: :opsonde_server),
+      default_release: if(Mix.env() == :cli, do: :skopos, else: :skopos_server),
       releases: releases(Mix.env()),
       aliases: aliases(),
       deps: deps(),
@@ -23,9 +23,9 @@ defmodule Opsonde.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     if Mix.env() == :cli do
-      [mod: {OpsondeCLI.Application, []}, extra_applications: [:logger]]
+      [mod: {SkoposCLI.Application, []}, extra_applications: [:logger]]
     else
-      [mod: {Opsonde.Application, []}, extra_applications: [:logger, :runtime_tools, :ssh]]
+      [mod: {Skopos.Application, []}, extra_applications: [:logger, :runtime_tools, :ssh]]
     end
   end
 
@@ -37,7 +37,7 @@ defmodule Opsonde.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(:cli), do: ["lib/opsonde_cli"]
+  defp elixirc_paths(:cli), do: ["lib/skopos_cli"]
   defp elixirc_paths(_), do: ["lib"]
 
   defp usage_rules do
@@ -109,7 +109,7 @@ defmodule Opsonde.MixProject do
 
   defp releases(:cli) do
     [
-      opsonde: [
+      skopos: [
         steps: [:assemble, &remove_server_assets/1, &Burrito.wrap/1],
         burrito: [
           targets: [
@@ -124,11 +124,11 @@ defmodule Opsonde.MixProject do
     ]
   end
 
-  defp releases(_env), do: [opsonde_server: []]
+  defp releases(_env), do: [skopos_server: []]
 
   defp remove_server_assets(release) do
-    version = release.applications |> Map.fetch!(:opsonde) |> Keyword.fetch!(:vsn)
-    app = Path.join([release.path, "lib", "opsonde-#{version}"])
+    version = release.applications |> Map.fetch!(:skopos) |> Keyword.fetch!(:vsn)
+    app = Path.join([release.path, "lib", "skopos-#{version}"])
 
     # Mix copies the project's priv/include even when only CLI sources compile.
     # Remove those server assets from the assembled copy, never from the project.
@@ -160,7 +160,7 @@ defmodule Opsonde.MixProject do
         "compile --warnings-as-errors",
         "deps.unlock --unused",
         "format --check-formatted",
-        "openapi.spec.json --spec OpsondeWeb.ApiSpec --pretty=true --vendor-extensions=false --start-app=false --check=true --filename openapi.json",
+        "openapi.spec.json --spec SkoposWeb.ApiSpec --pretty=true --vendor-extensions=false --start-app=false --check=true --filename openapi.json",
         "cmd --cd assets corepack pnpm run check:api",
         "cmd --cd assets corepack pnpm run check",
         "assets.build",

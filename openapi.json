@@ -9523,7 +9523,7 @@
     }
   },
   "info": {
-    "title": "Opsonde API",
+    "title": "Skopos API",
     "version": "0.1.1"
   },
   "openapi": "3.0.0",
@@ -20876,7 +20876,7 @@
             "webhookBearerAuth": []
           }
         ],
-        "summary": "Accept a canonical Opsonde Signal webhook",
+        "summary": "Accept a canonical Skopos Signal webhook",
         "tags": [
           "Signal webhooks"
         ]

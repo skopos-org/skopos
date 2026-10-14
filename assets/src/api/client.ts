@@ -1,8 +1,8 @@
 import createClient, { type Middleware } from "openapi-fetch";
 import type { paths } from "@/api/schema";
 
-const tokenKey = "opsonde.session";
-export const authenticationExpiredEvent = "opsonde:authentication-expired";
+const tokenKey = "skopos.session";
+export const authenticationExpiredEvent = "skopos:authentication-expired";
 export const commaSeparatedQuery = { array: { style: "form", explode: false } } as const;
 
 type ErrorBody = {

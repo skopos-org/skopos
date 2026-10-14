@@ -94,7 +94,7 @@ export function AppShell() {
         <SidebarHeader>
           <div className="flex h-10 items-center gap-2 px-2 font-semibold">
             <BookOpenCheck className="size-5 text-primary" />
-            <span className="group-data-[collapsible=icon]:hidden">Opsonde</span>
+            <span className="group-data-[collapsible=icon]:hidden">Skopos</span>
           </div>
         </SidebarHeader>
         <SidebarContent>

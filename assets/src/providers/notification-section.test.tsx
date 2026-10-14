@@ -114,7 +114,7 @@ test("lost destination registration remains identified across closing and reopen
       const input = await request.json();
       originalId = input.provider.registration_id;
       posts++;
-      const stored = sessionStorage.getItem(`opsonde.notification-request:${id(700)}`)!;
+      const stored = sessionStorage.getItem(`skopos.notification-request:${id(700)}`)!;
       expect(JSON.parse(stored).id).toBe(originalId);
       expect(stored).not.toContain("test-only-signing-secret");
       expect(stored).not.toContain("https://receiver.example/new");
@@ -162,7 +162,7 @@ test("lost destination registration remains identified across closing and reopen
   await screen.findByText("Destination operation confirmed: New destination");
   expect(posts).toBe(1);
   expect(receiptIds).toEqual([originalId, originalId]);
-  expect(sessionStorage.getItem(`opsonde.notification-request:${id(700)}`)).toBeNull();
+  expect(sessionStorage.getItem(`skopos.notification-request:${id(700)}`)).toBeNull();
 });
 
 test("lost connection check cannot reuse an older check and reads a newly recorded failed result without repeating the check", async () => {
@@ -210,7 +210,7 @@ test("lost connection check cannot reuse an older check and reads a newly record
   await user.click(screen.getByRole("button", { name: "Check result" }));
   await screen.findByText("Receiver unavailable");
   expect(posts).toBe(1);
-  expect(sessionStorage.getItem(`opsonde.notification-request:${id(700)}`)).toBeNull();
+  expect(sessionStorage.getItem(`skopos.notification-request:${id(700)}`)).toBeNull();
 });
 
 test.each(["enable", "disable"] as const)(
@@ -253,7 +253,7 @@ test.each(["enable", "disable"] as const)(
     await user.click(screen.getByRole("button", { name: "Check result" }));
     await screen.findByText("Destination operation confirmed: Destination 51");
     expect(posts).toBe(1);
-    expect(sessionStorage.getItem(`opsonde.notification-request:${id(700)}`)).toBeNull();
+    expect(sessionStorage.getItem(`skopos.notification-request:${id(700)}`)).toBeNull();
   },
 );
 
@@ -304,7 +304,7 @@ test.each(["create", "check"])(
         "Could not save the request. No destination operation was submitted.",
       );
       expect(posts).toEqual([]);
-      expect(sessionStorage.getItem(`opsonde.notification-request:${id(700)}`)).toBeNull();
+      expect(sessionStorage.getItem(`skopos.notification-request:${id(700)}`)).toBeNull();
     } finally {
       saving.mockRestore();
     }
@@ -378,7 +378,7 @@ test.each([409, 503])(
     await user.type(screen.getByLabelText("Signing secret"), "test-only-signing-secret-1234567890");
     await user.click(screen.getByRole("button", { name: "Add webhook destination" }));
     await waitFor(() => expect(finish).toBeTruthy());
-    const key = `opsonde.notification-request:${id(700)}`;
+    const key = `skopos.notification-request:${id(700)}`;
     const original = sessionStorage.getItem(key);
     expect(original).toBeTruthy();
     await user.click(screen.getByRole("button", { name: "Cancel" }));

@@ -1,4 +1,4 @@
-defmodule Opsonde.Repo.Migrations.BootstrapOban do
+defmodule Skopos.Repo.Migrations.BootstrapOban do
   use Ecto.Migration
 
   def up, do: Oban.Migration.up()

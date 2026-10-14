@@ -12,28 +12,28 @@ import Config
 # If you use `mix release`, you need to explicitly enable the server
 # by passing the PHX_SERVER=true when you start it:
 #
-#     PHX_SERVER=true bin/opsonde start
+#     PHX_SERVER=true bin/skopos_server start
 #
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
 if config_env() != :cli do
   if System.get_env("PHX_SERVER") do
-    config :opsonde, OpsondeWeb.Endpoint, server: true
+    config :skopos, SkoposWeb.Endpoint, server: true
   end
 
-  config :opsonde, OpsondeWeb.Endpoint,
+  config :skopos, SkoposWeb.Endpoint,
     http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 
   case_collect_seconds =
-    case Integer.parse(System.get_env("OPSONDE_CASE_COLLECT_SECONDS", "5")) do
+    case Integer.parse(System.get_env("SKOPOS_CASE_COLLECT_SECONDS", "5")) do
       {seconds, ""} when seconds in 0..30 -> seconds
-      _other -> raise "OPSONDE_CASE_COLLECT_SECONDS must be an integer from 0 to 30"
+      _other -> raise "SKOPOS_CASE_COLLECT_SECONDS must be an integer from 0 to 30"
     end
 
-  config :opsonde, :case_collect_seconds, case_collect_seconds
+  config :skopos, :case_collect_seconds, case_collect_seconds
 
   public_url =
-    System.get_env("OPSONDE_PUBLIC_URL", "http://localhost:4000")
+    System.get_env("SKOPOS_PUBLIC_URL", "http://localhost:4000")
     |> String.trim_trailing("/")
 
   public_uri = URI.parse(public_url)
@@ -41,26 +41,26 @@ if config_env() != :cli do
   unless public_uri.scheme in ["http", "https"] and is_binary(public_uri.host) and
            public_uri.path in [nil, ""] and is_nil(public_uri.userinfo) and
            is_nil(public_uri.query) and is_nil(public_uri.fragment) do
-    raise "OPSONDE_PUBLIC_URL must be an HTTP(S) origin without credentials, path, query, or fragment"
+    raise "SKOPOS_PUBLIC_URL must be an HTTP(S) origin without credentials, path, query, or fragment"
   end
 
-  config :opsonde, :public_url, public_url
+  config :skopos, :public_url, public_url
 
-  config :opsonde, OpsondeWeb.Endpoint,
+  config :skopos, SkoposWeb.Endpoint,
     url: [host: public_uri.host, port: public_uri.port, scheme: public_uri.scheme]
 
   if config_env() == :prod do
     encoded_credentials_key =
-      System.get_env("OPSONDE_CREDENTIALS_KEY") ||
-        raise("Missing environment variable `OPSONDE_CREDENTIALS_KEY`!")
+      System.get_env("SKOPOS_CREDENTIALS_KEY") ||
+        raise("Missing environment variable `SKOPOS_CREDENTIALS_KEY`!")
 
     credentials_key =
       case Base.decode64(encoded_credentials_key) do
         {:ok, key} when byte_size(key) == 32 -> key
-        _other -> raise "OPSONDE_CREDENTIALS_KEY must be a Base64-encoded 32-byte key"
+        _other -> raise "SKOPOS_CREDENTIALS_KEY must be a Base64-encoded 32-byte key"
       end
 
-    config :opsonde, Opsonde.Vault,
+    config :skopos, Skopos.Vault,
       ciphers: [
         default: {Cloak.Ciphers.AES.GCM, tag: "AES.GCM.V1", key: credentials_key, iv_length: 12}
       ]
@@ -82,8 +82,8 @@ if config_env() != :cli do
 
     maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
-    config :opsonde,
-           Opsonde.Repo,
+    config :skopos,
+           Skopos.Repo,
            database_options ++
              [
                pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
@@ -102,9 +102,9 @@ if config_env() != :cli do
         You can generate one by calling: mix phx.gen.secret
         """
 
-    config :opsonde, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
+    config :skopos, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
-    config :opsonde, OpsondeWeb.Endpoint,
+    config :skopos, SkoposWeb.Endpoint,
       http: [
         # Enable IPv6 and bind on all interfaces.
         # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
@@ -119,7 +119,7 @@ if config_env() != :cli do
     # To get SSL working, you will need to add the `https` key
     # to your endpoint configuration:
     #
-    #     config :opsonde, OpsondeWeb.Endpoint,
+    #     config :skopos, SkoposWeb.Endpoint,
     #       https: [
     #         ...,
     #         port: 443,
@@ -141,16 +141,16 @@ if config_env() != :cli do
     # We also recommend setting `force_ssl` in your config/prod.exs,
     # ensuring no data is ever sent via http, always redirecting to https:
     #
-    #     config :opsonde, OpsondeWeb.Endpoint,
+    #     config :skopos, SkoposWeb.Endpoint,
     #       force_ssl: [hsts: true]
     #
     # Check `Plug.SSL` for all available options in `force_ssl`.
   end
 
   if config_env() == :prod do
-    config :opsonde,
+    config :skopos,
       token_signing_secret:
-        System.get_env("OPSONDE_TOKEN_SIGNING_SECRET") ||
-          raise("Missing environment variable `OPSONDE_TOKEN_SIGNING_SECRET`!")
+        System.get_env("SKOPOS_TOKEN_SIGNING_SECRET") ||
+          raise("Missing environment variable `SKOPOS_TOKEN_SIGNING_SECRET`!")
   end
 end

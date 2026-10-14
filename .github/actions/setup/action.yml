@@ -1,4 +1,4 @@
-name: Set up Opsonde tools
+name: Set up Skopos tools
 description: Install CI tools using the versions owned by the root Dockerfile
 inputs:
   cli:
@@ -26,11 +26,11 @@ runs:
           extra="node ${BASH_REMATCH[1]}"
         fi
         {
-          echo 'tools<<OPSONDE_TOOLS'
+          echo 'tools<<SKOPOS_TOOLS'
           echo "erlang $otp"
           echo "elixir $elixir-otp-${otp%%.*}"
           echo "$extra"
-          echo OPSONDE_TOOLS
+          echo SKOPOS_TOOLS
         } >> "$GITHUB_OUTPUT"
     - uses: jdx/mise-action@v3
       with:

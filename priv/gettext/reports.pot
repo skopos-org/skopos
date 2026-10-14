@@ -11,77 +11,77 @@
 msgid ""
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:243
+#: lib/skopos/cases/report/content.ex:243
 #, elixir-autogen, elixir-format
 msgid "Approvals"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:256
+#: lib/skopos/cases/report/content.ex:256
 #, elixir-autogen, elixir-format
 msgid "Cancelled"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:255
+#: lib/skopos/cases/report/content.ex:255
 #, elixir-autogen, elixir-format
 msgid "Needs attention"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:244
+#: lib/skopos/cases/report/content.ex:244
 #, elixir-autogen, elixir-format
 msgid "Operations"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:241
+#: lib/skopos/cases/report/content.ex:241
 #, elixir-autogen, elixir-format
 msgid "Proposals"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:240
+#: lib/skopos/cases/report/content.ex:240
 #, elixir-autogen, elixir-format
 msgid "Raw evidence"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:238
+#: lib/skopos/cases/report/content.ex:238
 #, elixir-autogen, elixir-format
 msgid "Resolution runs"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:254
+#: lib/skopos/cases/report/content.ex:254
 #, elixir-autogen, elixir-format
 msgid "Resolved"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:239
+#: lib/skopos/cases/report/content.ex:239
 #, elixir-autogen, elixir-format
 msgid "Resolver decisions"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:242
+#: lib/skopos/cases/report/content.ex:242
 #, elixir-autogen, elixir-format
 msgid "Reviews"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:235
+#: lib/skopos/cases/report/content.ex:235
 #, elixir-autogen, elixir-format
 msgid "Summary"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:237
+#: lib/skopos/cases/report/content.ex:237
 #, elixir-autogen, elixir-format
 msgid "Target path"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:236
+#: lib/skopos/cases/report/content.ex:236
 #, elixir-autogen, elixir-format
 msgid "Timeline"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:246
+#: lib/skopos/cases/report/content.ex:246
 #, elixir-autogen, elixir-format
 msgid "Unresolved items"
 msgstr ""
 
-#: lib/opsonde/cases/report/content.ex:245
+#: lib/skopos/cases/report/content.ex:245
 #, elixir-autogen, elixir-format
 msgid "Verifications"
 msgstr ""

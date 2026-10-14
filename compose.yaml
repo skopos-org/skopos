@@ -1,14 +1,14 @@
-name: opsonde
+name: skopos
 
 services:
   database:
     image: postgres:18.6-bookworm
     environment:
-      POSTGRES_DB: opsonde
-      POSTGRES_USER: opsonde
+      POSTGRES_DB: skopos
+      POSTGRES_USER: skopos
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U opsonde -d opsonde"]
+      test: ["CMD-SHELL", "pg_isready -U skopos -d skopos"]
       interval: 2s
       timeout: 5s
       retries: 30
@@ -16,19 +16,19 @@ services:
       - database:/var/lib/postgresql
 
   migrate:
-    image: ${OPSONDE_IMAGE:-ghcr.io/munenick/opsonde}:${OPSONDE_VERSION:-0.1.1}
+    image: ${SKOPOS_IMAGE:-ghcr.io/skopos-org/skopos}:${SKOPOS_VERSION:-0.1.1}
     build:
       context: .
       args:
-        OPSONDE_VERSION: ${OPSONDE_VERSION:-0.1.1}
-    command: ["eval", "Opsonde.Release.migrate()"]
+        SKOPOS_VERSION: ${SKOPOS_VERSION:-0.1.1}
+    command: ["eval", "Skopos.Release.migrate()"]
     environment:
       DATABASE_HOST: database
-      DATABASE_NAME: opsonde
-      DATABASE_USER: opsonde
+      DATABASE_NAME: skopos
+      DATABASE_USER: skopos
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
-      OPSONDE_CREDENTIALS_KEY: ${OPSONDE_CREDENTIALS_KEY:?Set OPSONDE_CREDENTIALS_KEY}
-      OPSONDE_TOKEN_SIGNING_SECRET: ${OPSONDE_TOKEN_SIGNING_SECRET:?Set OPSONDE_TOKEN_SIGNING_SECRET}
+      SKOPOS_CREDENTIALS_KEY: ${SKOPOS_CREDENTIALS_KEY:?Set SKOPOS_CREDENTIALS_KEY}
+      SKOPOS_TOKEN_SIGNING_SECRET: ${SKOPOS_TOKEN_SIGNING_SECRET:?Set SKOPOS_TOKEN_SIGNING_SECRET}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE:?Set SECRET_KEY_BASE}
     depends_on:
       database:
@@ -36,26 +36,26 @@ services:
     restart: "no"
 
   server:
-    image: ${OPSONDE_IMAGE:-ghcr.io/munenick/opsonde}:${OPSONDE_VERSION:-0.1.1}
+    image: ${SKOPOS_IMAGE:-ghcr.io/skopos-org/skopos}:${SKOPOS_VERSION:-0.1.1}
     build:
       context: .
       args:
-        OPSONDE_VERSION: ${OPSONDE_VERSION:-0.1.1}
+        SKOPOS_VERSION: ${SKOPOS_VERSION:-0.1.1}
     environment:
       DATABASE_HOST: database
-      DATABASE_NAME: opsonde
-      DATABASE_USER: opsonde
+      DATABASE_NAME: skopos
+      DATABASE_USER: skopos
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
-      OPSONDE_CREDENTIALS_KEY: ${OPSONDE_CREDENTIALS_KEY:?Set OPSONDE_CREDENTIALS_KEY}
-      OPSONDE_TOKEN_SIGNING_SECRET: ${OPSONDE_TOKEN_SIGNING_SECRET:?Set OPSONDE_TOKEN_SIGNING_SECRET}
-      OPSONDE_PUBLIC_URL: ${OPSONDE_PUBLIC_URL:-http://localhost:4000}
-      OPSONDE_CASE_COLLECT_SECONDS: ${OPSONDE_CASE_COLLECT_SECONDS:-5}
+      SKOPOS_CREDENTIALS_KEY: ${SKOPOS_CREDENTIALS_KEY:?Set SKOPOS_CREDENTIALS_KEY}
+      SKOPOS_TOKEN_SIGNING_SECRET: ${SKOPOS_TOKEN_SIGNING_SECRET:?Set SKOPOS_TOKEN_SIGNING_SECRET}
+      SKOPOS_PUBLIC_URL: ${SKOPOS_PUBLIC_URL:-http://localhost:4000}
+      SKOPOS_CASE_COLLECT_SECONDS: ${SKOPOS_CASE_COLLECT_SECONDS:-5}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE:?Set SECRET_KEY_BASE}
     depends_on:
       migrate:
         condition: service_completed_successfully
     ports:
-      - "${OPSONDE_PORT:-4000}:4000"
+      - "${SKOPOS_PORT:-4000}:4000"
     restart: unless-stopped
 
 volumes:
